@@ -41,7 +41,7 @@ public class MissionInfo {
                 0.5 - Math.cos((currentLat - missionLat) * Math.PI / 180) / 2 +
                         Math.cos(missionLat * Math.PI / 180) * Math.cos(currentLat * Math.PI / 180) *
                                 (1 - Math.cos((currentLong - missionLong) * Math.PI / 180)) / 2;
-        return R * 2 * Math.asin(Math.sqrt(a));
+        return 1000 * R * 2 * Math.asin(Math.sqrt(a));
     }
 
     public boolean checkIfDone() {
