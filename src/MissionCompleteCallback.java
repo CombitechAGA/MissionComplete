@@ -23,7 +23,7 @@ public class MissionCompleteCallback implements MqttCallback{
 
     @Override
     public void connectionLost(Throwable throwable) {
-        System.out.println("GeofenceService lost connection!");
+        System.out.println("MissionComplete lost connection!");
     }
 
 
