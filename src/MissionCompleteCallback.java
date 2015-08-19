@@ -3,7 +3,9 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by Fredrik on 2015-07-06.
@@ -11,11 +13,12 @@ import java.util.HashMap;
 public class MissionCompleteCallback implements MqttCallback{
     private MqttClient client;
     private HashMap<String, MissionInfo> clientToInfo;
-
+    private HashSet<String> subscriptions;
 
     public MissionCompleteCallback(MqttClient client){
         this.client = client;
         clientToInfo = new HashMap<>();
+        subscriptions = new HashSet<>();
     }
 
     @Override
@@ -50,8 +53,11 @@ public class MissionCompleteCallback implements MqttCallback{
                }
            }
            else{
-               System.out.println("Nu ska jag subscribe:a");
-               new SubscribeThread(client,carID+"/message").start();
+               String subscriptionTopic = carID+"/message";
+               if(!subscriptions.contains(subscriptionTopic)) {
+                   System.out.println("Nu ska jag subscribe:a");
+                   new SubscribeThread(client, carID + "/message").start();
+               }
            }
        }
        else if (topic.contains("/message")) {
